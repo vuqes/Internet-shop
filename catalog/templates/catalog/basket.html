@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+{% extends 'catalog/home.html' %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+<div>
+{% block content %}
+    {% if counter > 0 %}
+    <div class="grid text-center" style="--bs-columns: 10; --bs-gap: 1rem;">
+      <div class="g-col-6" align="center">
+        {% for i in get %}
+                <div class="card mb-3" style="max-width: 540px;">
+                  <div class="row g-0">
+                    <div class="col-md-4">
+                      <img src="{{ i.image.url }}" class="img-fluid rounded-start" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body">
+                        <br>
+                        <h5 class="card-title"><a href="{% url 'product' i.slug %}"><p class="card-text">{{ i.name }}</p></a></h5>
+                          <h4>{{ i.price }}</h4>
+                      </div>
+                        <div align="right">
+                            <form>
+                                <input type="number" size="1" name="num" min="1" max="10" value="{{ i.value }}">
+                            </form>
+                        </div>
+                        <div align="right">
+                        <a href="{% url 'remove_basket' i.slug %}"><button type="button" class="btn btn-secondary">Удалить из корзины</button></a>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+        {% endfor %}
+       </div>
+       <div class="g-col-4" align="center">
+           <form>
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Купон для скидки</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <div id="emailHelp" class="form-text">Фрмат: AAAA-AAAA-AAAA</div>
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">E-mail</label>
+                <input type="password" class="form-control" id="exampleInputPassword1">
+              </div>
+              <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">Согласен на обработку персональных данных</label>
+              </div>
+              <button type="submit" class="btn btn-primary">Отправить</button>
+            </form>
+        <br>
+        <div>
+            <h4>Итого: {{ sum_basket }} руб.</h4><br>
+            <a href="#"><button type="button" class="btn btn-danger">Оформить заказ</button></a>
+        </div>
+       </div>
+    </div>
+    {% else %}
+        <br>
+        <p align="center">В корзине пока нет товаров</p>
+        <br>
+    {% endif %}
+{% endblock %}
+</div>
+</body>
+</html>

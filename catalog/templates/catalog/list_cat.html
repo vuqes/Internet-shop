@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+{% extends 'catalog/home.html' %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+{% block content %}
+<div class="grid text-center" style="--bs-columns: 20; --bs-gap: 1rem;">
+  <div class="g-col-6">
+      <main class="d-flex flex-nowrap">
+          <div class="flex-shrink-0 p-3 bg-white" style="width: 280px;" align="left">
+            <a class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
+              <svg class="bi pe-none me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
+              <span class="fs-5 fw-semibold">{{ title }}</span>
+            </a>
+            <ul class="list-unstyled ps-0">
+              <li class="mb-1">
+                <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
+                  Цена
+                </button>
+                <div class="collapse show" id="home-collapse">
+                  <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Overview</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Updates</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Reports</a></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="mb-1">
+                <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
+                  Производитель
+                </button>
+                <div class="collapse" id="dashboard-collapse">
+                  <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Overview</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Weekly</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Monthly</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Annually</a></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="mb-1">
+                <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
+                  Способ оплаты
+                </button>
+                <div class="collapse" id="orders-collapse">
+                  <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">New</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Processed</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Shipped</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Returned</a></li>
+                  </ul>
+                </div>
+              </li>
+              <li class="border-top my-3"></li>
+              <li class="mb-1">
+                <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
+                  Акции
+                </button>
+                <div class="collapse" id="account-collapse">
+                  <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">New...</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Profile</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Settings</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Sign out</a></li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </div>
+      </main>
+
+<div class="content">
+</div>
+  </div>
+  <div class="g-col-4">
+        {% for i in get %}
+            {% if i.available == True %}
+                <div class="card mb-3" style="width: 800px;">
+                  <div class="row g-0">
+                    <div class="col-md-4">
+                      <img src="{{ i.image.url }}" class="img-fluid rounded-start" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body">
+                          <a href="{% url 'product' i.slug %}"><h5 class="card-title">{{ i }}</h5></a>
+                        <p class="card-text">Небольшое описание</p>
+                        <p class="card-text"><small class="text-muted">{{ i.price }}</small></p>
+                      </div>
+                        <br>
+                        <a href="{% url 'add_basket' i.slug %}"><button type="button" class="btn btn-danger">В корзину</button></a>
+                    </div>
+                  </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+</div>
+{% endblock %}
+</body>
+</html>

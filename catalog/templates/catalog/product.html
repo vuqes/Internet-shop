@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+{% extends 'catalog/home.html' %}
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>{{ title }}</title>
+</head>
+<body>
+{% block content %}
+    <h2>{{ get.name }}</h2>
+    {% if get.image %}
+        <p><img src="{{ get.image.url }}" width="350" height="350"></p>
+    {% endif %}
+    <h4>Цена: {{ get.price }}</h4>
+    <div align="right">
+        <a href="{% url 'add_basket' get.slug %}"><button type="button" class="btn btn-danger">Добавить в корзину</button></a>
+    </div>
+    <h3>Описание товара: </h3>
+        <h4>{{ get.description }}</h4>
+    <h4>На складе: {{ get.stock }}</h4>
+
+{% endblock %}
+
+</body>
+</html>
