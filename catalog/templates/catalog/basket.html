@@ -11,11 +11,11 @@
     {% if counter > 0 %}
     <div class="grid text-center" style="--bs-columns: 10; --bs-gap: 1rem;">
       <div class="g-col-6" align="center">
-        {% for i in get %}
+        {% for i in products_user %}
                 <div class="card mb-3" style="max-width: 540px;">
                   <div class="row g-0">
                     <div class="col-md-4">
-                      <img src="{{ i.image.url }}" class="img-fluid rounded-start" alt="...">
+                        <img src="{{ i.image.url }}" class="img-fluid rounded-start" alt="...">
                     </div>
                     <div class="col-md-8">
                       <div class="card-body">

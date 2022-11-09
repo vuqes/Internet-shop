@@ -8,11 +8,9 @@
 <body>
 {% block content %}
 {% if user.is_authenticated %}
-    <h4>Мои заказы: </h4>
-    <h1>hello</h1>
-{% else %}
-    <h3>Войдите или зарегистрируйтесь</h3>
-{% endif %}
+    {% else %}
+        <h3>Войдите или зарегистрируйтесь</h3>
+    {% endif %}
 {% endblock %}
 </body>
 </html>

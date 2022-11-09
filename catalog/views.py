@@ -1,19 +1,27 @@
 from django.contrib.auth import logout, login
 from django.contrib.auth.views import LoginView
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DetailView
 
 from .models import *
 from .forms import *
-from .utils import ShopMixin
+from .utils import *
 
 
-class Home(ShopMixin, ListView):
-    model = Product
-    template_name = 'catalog/home.html'
-    context_object_name = 'get'
-    extra_context = {'title': 'E-shop'}
+def home(request):
+    basket = Basket.objects.filter(user_of=request.user.username)
+    try:
+        user = Account.objects.create(username=request.user.username)
+    except:
+        user = request.user.username
+    context = {
+        'get': Product.objects.all(),
+        'get_cat': Category.objects.all(),
+        'counter': basket.count,
+        'title': 'E-shop',
+    }
+    return render(request, 'catalog/home.html', context)
 
 
 class CategoryList(ListView):
@@ -26,9 +34,10 @@ class CategoryList(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['get_cat'] = Category.objects.all()
-        context['counter'] = Basket.objects.all().count
+        context['counter'] = basket_user(self.request).count
         context['title'] = Category.objects.filter(slug=self.kwargs['slug'])[0]
+        context['user_name'] = basket_user(self.request)
+        context['get_cat'] = Category.objects.all()
         return context
 
 
@@ -43,41 +52,43 @@ class ShowProduct(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['get_cat'] = Category.objects.all()
-        context['counter'] = Basket.objects.all().count
+        context['counter'] = basket_user(self.request).count
         context['title'] = Product.objects.filter(slug=self.kwargs['slug'])[0]
+        context['already_in_basket'] = have_prod_basket(self.request, self.kwargs['slug'])
         return context
 
 
-class MyBasket(ShopMixin, ListView):
-    model = Basket
-    template_name = 'catalog/basket.html'
-    context_object_name = 'get'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['get_cat'] = Category.objects.all()
-        context['counter'] = Basket.objects.all().count
-        context['sum_basket'] = self.get_total_basket_sum
-        context['title'] = 'Корзина'
-        return context
+def my_basket(request):
+    context = {
+        'get': Product.objects.all(),
+        'get_cat': Category.objects.all(),
+        'counter': basket_user(request).count,
+        'title': 'Корзина',
+        'sum_basket': get_total_basket_sum(request),
+        'products_user': basket_user(request),
+    }
+    return render(request, 'catalog/basket.html', context)
 
 
-def add_basket(request, slug):  # Добавляем товар в корзину, а если он там есть, то к value + 1
+def add_basket(request, slug):  # Добавляем товар в корзину, а если он там есть, то к value + 1 и к price
     get = Product.objects.get(slug=slug)
-    price = get.price
     try:
         add = Basket.objects.get(slug=slug)
-        add.value += 1
-        add.price += price
-        add.save()
+        if add.user_of == request.user.username:
+            add.value += 1
+            add.price += get.price
+            add.save()
+        else:
+            Basket.objects.create(name=get.name, price=get.price, slug=get.slug, value=1, image=get.image,  user_of=request.user.username)
     except:
-        Basket.objects.create(name=get.name, price=get.price, stock=get.stock, category_id=get.category_id, image=get.image, slug=get.slug, value=1)
+        Basket.objects.create(name=get.name, price=get.price, slug=get.slug, value=1, image=get.image, user_of=request.user.username)
+
     return redirect(request.META.get('HTTP_REFERER'))
 
 
 def remove_basket(request, slug):  # Удаляем товар из корзины
-    delete = Basket.objects.get(slug=slug)
-    delete.delete()
+    basket_prod = Basket.objects.filter(user_of=request.user.username).get(slug=slug)
+    basket_prod.delete()
     return redirect('basket')
 
 
@@ -107,7 +118,13 @@ class LoginUser(LoginView):
 
 
 class UserRoom(ShopMixin, ListView):
-    model = Product
+    model = Account
     template_name = 'catalog/user_room.html'
     context_object_name = 'get'
     extra_context = {'title': 'Личный кабинет'}
+
+
+
+
+
+
