@@ -10,7 +10,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to='products/%Y/%m/%d', blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    slug = models.SlugField(max_length=200, db_index=True)
+    slug = models.SlugField(max_length=200, db_index=True, unique=True)
     stock = models.PositiveIntegerField()
     available = models.BooleanField(default=True)
 
@@ -55,10 +55,12 @@ class Account(models.Model):
     first_name = models.CharField(max_length=50, blank=True)
     last_name = models.CharField(max_length=50, blank=True)
     username = models.CharField(max_length=50, unique=True)
+    image = models.ImageField(upload_to='users_photo/%Y/%m/%d', blank=True)
     email = models.EmailField(max_length=50, blank=True)
     phone = models.CharField(max_length=50, blank=True)
     date_joined = models.DateTimeField(auto_now_add=True)
     is_admin = models.BooleanField(default=False)
+    address = models.CharField(max_length=255, blank=True)
 
     def __str__(self):
         return self.username

@@ -8,9 +8,22 @@
 <body>
 {% block content %}
 {% if user.is_authenticated %}
+    {% if get.image %}
+        <p><img src="{{ get.image.url }}" width="150" height="200"></p>
     {% else %}
-        <h3>Войдите или зарегистрируйтесь</h3>
+        <p><img src="https://okeygeek.ru/wp-content/uploads/2020/03/no_avatar.png" width="150" height="150"></p>
     {% endif %}
+    <h3>Имя: {{ get.first_name }}</h3>
+    <h3>Фамилия: {{ get.last_name }}</h3>
+    <h3>Логин: {{ get.username }}</h3>
+    <h3>Email: {{ get.email }}</h3>
+    <h3>Телефон: {{ get.phone }}</h3>
+    <h3>Адрес: {{ get.address }}</h3>
+    <a href="{% url 'edit_profile' %}"><button class="btn btn-primary">Редактировать профиль</button></a>
+{% else %}
+    <h4>Войдите или зарегистрируйтесь</h4>
+{% endif %}
+
 {% endblock %}
 </body>
 </html>

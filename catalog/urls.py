@@ -16,4 +16,5 @@ urlpatterns = [
     path('user_room/', UserRoom.as_view(), name='user_room'),
     path('add_basket/<slug:slug>/', add_basket, name='add_basket'),
     path('remove_basket/<slug:slug>/', remove_basket, name='remove_basket'),
+    path('user_room/edit_profile/', EditUserProfile.as_view(), name='edit_profile'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

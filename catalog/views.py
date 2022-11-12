@@ -2,7 +2,7 @@ from django.contrib.auth import logout, login
 from django.contrib.auth.views import LoginView
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView, DetailView
+from django.views.generic import CreateView, ListView, DetailView, FormView
 
 from .models import *
 from .forms import *
@@ -118,13 +118,28 @@ class LoginUser(LoginView):
 
 
 class UserRoom(ShopMixin, ListView):
-    model = Account
     template_name = 'catalog/user_room.html'
     context_object_name = 'get'
     extra_context = {'title': 'Личный кабинет'}
 
+    def get_queryset(self):
+        queryset = Account.objects.get(username=self.request.user.username)
+        return queryset
 
 
+class EditUserProfile(ShopMixin, FormView):
+    form_class = UserRoomForm
+    template_name = 'catalog/edit_user_profile.html'
+    extra_context = {'title': 'Редактировать профиль'}
 
-
+    def form_valid(self, form):
+        user_data = Account.objects.get(username=self.request.user.username)
+        user_data.first_name = form.cleaned_data['first_name']
+        user_data.last_name = form.cleaned_data['last_name']
+        user_data.email = form.cleaned_data['email']
+        user_data.image = form.cleaned_data['image']
+        user_data.phone = form.cleaned_data['phone']
+        user_data.address = form.cleaned_data['address']
+        user_data.save()
+        return redirect('user_room')
 
