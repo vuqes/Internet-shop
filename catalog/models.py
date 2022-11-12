@@ -56,7 +56,6 @@ class Account(models.Model):
     last_name = models.CharField(max_length=50, blank=True)
     username = models.CharField(max_length=50, unique=True)
     image = models.ImageField(upload_to='users_photo/%Y/%m/%d', blank=True)
-    email = models.EmailField(max_length=50, blank=True)
     phone = models.CharField(max_length=50, blank=True)
     date_joined = models.DateTimeField(auto_now_add=True)
     is_admin = models.BooleanField(default=False)

@@ -24,6 +24,18 @@ def home(request):
     return render(request, 'catalog/home.html', context)
 
 
+def searching(request):
+    if request.method == 'GET':
+        search = request.GET.get('search') if request.GET.get('search') is not None else ''
+        context = {
+            'value': Product.objects.filter(name__iregex=search),
+            'title': 'Результаты поиска',
+            'counter': basket_user(request).count,
+            'search': search
+        }
+        return render(request, 'catalog/search.html', context)
+
+
 class CategoryList(ListView):
     template_name = 'catalog/list_cat.html'
     context_object_name = 'get'
@@ -79,9 +91,19 @@ def add_basket(request, slug):  # Добавляем товар в корзин�
             add.price += get.price
             add.save()
         else:
-            Basket.objects.create(name=get.name, price=get.price, slug=get.slug, value=1, image=get.image,  user_of=request.user.username)
+            Basket.objects.create(name=get.name,
+                                  price=get.price,
+                                  slug=get.slug,
+                                  value=1,
+                                  image=get.image,
+                                  user_of=request.user.username)
     except:
-        Basket.objects.create(name=get.name, price=get.price, slug=get.slug, value=1, image=get.image, user_of=request.user.username)
+        Basket.objects.create(name=get.name,
+                              price=get.price,
+                              slug=get.slug,
+                              value=1,
+                              image=get.image,
+                              user_of=request.user.username)
 
     return redirect(request.META.get('HTTP_REFERER'))
 
@@ -136,7 +158,6 @@ class EditUserProfile(ShopMixin, FormView):
         user_data = Account.objects.get(username=self.request.user.username)
         user_data.first_name = form.cleaned_data['first_name']
         user_data.last_name = form.cleaned_data['last_name']
-        user_data.email = form.cleaned_data['email']
         user_data.image = form.cleaned_data['image']
         user_data.phone = form.cleaned_data['phone']
         user_data.address = form.cleaned_data['address']
