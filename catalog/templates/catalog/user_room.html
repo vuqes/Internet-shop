@@ -8,8 +8,9 @@
 <body>
 {% block content %}
 {% if user.is_authenticated %}
+    <div style="margin: 0 0 0 2.5%">
     {% if get.image %}
-        <p><img src="{{ get.image.url }}" width="150" height="200"></p>
+        <p><img src="{{ get.image.url }}" width="150" height="200" style="border-radius: 8px;"></p>
     {% else %}
         <p><img src="https://okeygeek.ru/wp-content/uploads/2020/03/no_avatar.png" width="150" height="150"></p>
     {% endif %}
@@ -18,11 +19,14 @@
     <h3>Логин: {{ get.username }}</h3>
     <h3>Email: {{ user.email }}</h3>
     <h3>Телефон: {{ get.phone }}</h3>
-    <h3>Адрес: {{ get.address }}</h3>
+    <h3>Адрес: {{ get.address }}</h3><br>
     <a href="{% url 'edit_profile' %}"><button class="btn btn-primary">Редактировать профиль</button></a>
+    </div>
 {% else %}
-    <h4>Войдите или зарегистрируйтесь</h4>
-{% endif %}
+    <div align="center">
+        <h4>Войдите или зарегистрируйтесь</h4>
+    </div>
+    {% endif %}
 
 {% endblock %}
 </body>

@@ -19,7 +19,6 @@
                     </div>
                     <div class="col-md-8">
                       <div class="card-body">
-                        <br>
                         <h5 class="card-title"><a href="{% url 'product' i.slug %}"><p class="card-text">{{ i.name }}</p></a></h5>
                           <h4>{{ i.price }}</h4>
                       </div>
@@ -37,7 +36,7 @@
         {% endfor %}
        </div>
        <div class="g-col-4" align="center">
-           <form>
+           <form style="margin: 0 10% 0 0">
               <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Купон для скидки</label>
                 <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -55,8 +54,8 @@
             </form>
         <br>
         <div>
-            <h4>Итого: {{ sum_basket }} руб.</h4><br>
-            <a href="#"><button type="button" class="btn btn-danger">Оформить заказ</button></a>
+            <h4 style="margin: 0 10% 0 0;">Итого: {{ sum_basket }} руб.</h4><br>
+            <a href="#"><button type="button" class="btn btn-danger" style="margin: 0 10% 0 0;">Оформить заказ</button></a>
         </div>
        </div>
     </div>

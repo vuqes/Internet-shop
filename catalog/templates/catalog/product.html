@@ -8,7 +8,7 @@
 {% block content %}
     <h2>{{ get.name }}</h2>
     {% if get.image %}
-        <p><img src="{{ get.image.url }}" width="350" height="350"></p>
+        <p><img src="{{ get.image.url }}" height="300"></p>
     {% endif %}
     <h4>Цена: {{ get.price }}</h4>
     {% if already_in_basket %}
@@ -21,7 +21,7 @@
     </div>
     {% endif %}
     <h3>Описание товара: </h3>
-        <h4>{{ get.description }}</h4>
+    <h4>{{ get.description }}</h4><br>
     <h4>На складе: {{ get.stock }}</h4>
 
 {% endblock %}

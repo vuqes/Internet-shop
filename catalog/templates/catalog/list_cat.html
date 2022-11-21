@@ -22,9 +22,8 @@
                 </button>
                 <div class="collapse show" id="home-collapse">
                   <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Overview</a></li>
-                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Updates</a></li>
-                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Reports</a></li>
+                    <li>От: <input type="number" style="width: 80px;"></li><br>
+                    <li>До: <input type="number" style="width: 80px;"></li>
                   </ul>
                 </div>
               </li>
@@ -32,12 +31,19 @@
                 <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
                   Производитель
                 </button>
-                <div class="collapse" id="dashboard-collapse">
+                <div class="collapse show" id="dashboard-collapse">
                   <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Overview</a></li>
-                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Weekly</a></li>
-                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Monthly</a></li>
-                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Annually</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Apple</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Samsung</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Philips</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Bosh</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Huawei</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Xiaomi</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Acer</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Polaris</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">HP</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Haier</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Indesit</a></li>
                   </ul>
                 </div>
               </li>
@@ -45,12 +51,12 @@
                 <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
                   Способ оплаты
                 </button>
-                <div class="collapse" id="orders-collapse">
+                <div class="collapse show" id="orders-collapse">
                   <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">New</a></li>
-                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Processed</a></li>
-                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Shipped</a></li>
-                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Returned</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Безналичный расчет</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Кредит</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Рассрочка</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Сплит</a></li>
                   </ul>
                 </div>
               </li>
@@ -59,12 +65,12 @@
                 <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
                   Акции
                 </button>
-                <div class="collapse" id="account-collapse">
+                <div class="collapse show" id="account-collapse">
                   <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">New...</a></li>
-                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Profile</a></li>
-                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Settings</a></li>
-                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Sign out</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Черная пятница</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">1 + 1 = 3</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Сезонная распродажа</a></li>
+                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Скидки недели</a></li>
                   </ul>
                 </div>
               </li>
@@ -81,12 +87,12 @@
                 <div class="card mb-3" style="width: 800px;">
                   <div class="row g-0">
                     <div class="col-md-4">
-                      <img src="{{ i.image.url }}" class="img-fluid rounded-start" alt="...">
+                      <img src="{{ i.image.url }}" class="img-fluid rounded-start" alt="Product's image">
                     </div>
                     <div class="col-md-8">
                       <div class="card-body">
-                          <a href="{% url 'product' i.slug %}"><h5 class="card-title">{{ i }}</h5></a>
-                        <p class="card-text">Небольшое описание</p>
+                          <a href="{% url 'product' i.slug %}"><h5 class="card-title">{{ i }}</h5></a><br>
+                        <p class="card-text">Небольшое описание, которое вкратце показывает основные характеристики товара</p><br>
                         <h3>{{ i.price }}</h3>
                       </div>
                     </div>

@@ -8,6 +8,7 @@
 <body>
 {% block content %}
     {% if value.count > 0 %}
+        <h3>Найдено по запросу "{{ search }}":</h3><br>
         {% for i in value %}
             <div class="card mb-3" style="max-width: 540px;">
                 <div class="row g-0">

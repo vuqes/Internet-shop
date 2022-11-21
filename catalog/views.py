@@ -87,7 +87,6 @@ def add_basket(request, slug):  # Добавляем товар в корзин�
     try:
         add = Basket.objects.get(slug=slug)
         if add.user_of == request.user.username:
-            add.value += 1
             add.price += get.price
             add.save()
         else:
