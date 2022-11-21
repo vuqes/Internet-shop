@@ -11,4 +11,4 @@ Possibless:
 - comfortable sort of products;
 - and more...
 
-This shop written on Django 4.1 with Boostrap.
+This shop written on Django 4.1 with Bootstrap.
